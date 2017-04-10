@@ -1,0 +1,160 @@
+SI 206 W17
+Put your name here: David Nguyen (djnguyen)
+
+----
+
+Which option for the final project are you choosing -- 1, 2, or 3?
+
+OPTION #2: Twitter/OMDB API Mashup
+
+
+THE FOLLOWING QUESTIONS ARE FOR EVERYONE. (Though they may be easier if you are choosing Option 1 or 2, because you can reference the Option 1 or 2 instructions.)
+
+* What will at least one of the classes you're going to define be called?
+
+A class that I am going to define will be called "Movie"
+
+
+
+* What will that class take as input to its constructor?
+
+That class will take a Movie title as input to the constructor.
+
+
+
+* What will 1 instance of this class represent?
+
+One instance of this class will represent a particular Movie.
+
+
+* What are 3 instance variables this class will have? What will they be called, and what information will they hold? Why are they important?
+
+3 Instance Variables that the class will have is self.title, self.director, self.genre, self.director_handle
+
+The name of the instance variables speak for themselves and will contain specific attributes of a particular movie such as the Title, Director, Genre, Director's Twitter Handle, etc.
+
+
+
+* Explain 2 methods the class will have that are not the class constructor (__init__ method) by answering the following questions for each. 
+ONE METHOD:
+- What will the name of the method be?
+
+def get_ratings(self)
+
+
+- What will the method do?
+
+This method "get_ratings()" will obtain the ratings for the particular movie that is returned from the OMDB API. Since there are ratings from mutiple sources such as Rotten Tomatoes, Metacritic, and the Internet Movie Database, I will have to extract them and zip them into a dictionary. 
+
+
+- Will it take any additional input? 
+
+It will not take any additional input
+
+
+- Will it return anything? Should it change anything about the instance/an instance variable? 
+
+It will return a dictionary of the ratings from each of the sources that is returned from the search query to the OMDB API.
+
+
+- Why is it useful for this class definition, in this program?
+
+It is useful because it is an attribute of the movie and I can definitely be using the score to do something with Database queries and for the rest of my program.
+
+
+ANOTHER METHOD:
+- What will the name of the method be?
+
+def get_genre(self)
+
+
+- What will the method do?
+
+This method will obtain the genre of the Movie that is being inputted into the class
+
+
+- Will it take any additional input? 
+
+It will not take any additional input. 
+
+
+- Will it return anything? Should it change anything about the instance/an instance variable? 
+
+It will return the genre of the movie. 
+
+
+- Why is it useful for this class definition, in this program?
+
+This can be used for search queries in my database as I can sort the movies by Genre and maybe connect them using JOIN.
+
+[If you definitely want to have a third, feel free to answer those questions a third time, because you'll have to do so eventually. when you write documentation!]
+
+
+* What will the tables in your database be?
+
+3 Tables:
+
+Tweets
+Users
+Movies
+
+
+
+* What fields will each database table have? Which field of them is the primary key? You should list the fields for each database table here, e.g.
+
+Tweets:
+- tweet_id (PRIMARY KEY) + (STRING)
+- tweet_text (TEXT)
+- tweet_user (TEXT)
+
+
+Users:
+- user_id(PRIMARY KEY)
+- screen_name(TEXT)
+- num_favorite_users(INT)
+- twitter_bio(TEXT)
+
+Movies:
+- movie_id(PRIMARY KEY)
+- title (TEXT)
+- genre (TEXT)
+- Director (TEXT)
+- Director Twitter Handle (TEXT)
+- Languages (INT)
+- Rotten Tomatoes Rating (INT)
+
+
+* List, in English, 2 queries you'll want to make from your database. At least one should be a JOIN. You can always change these later, but start with  ideas you're interested in and lessen the work on yourself later on! 
+(e.g. from class examples, maybe "I want to make a query that accesses the numbers of times each user has favorited tweets, and the number of times tweets that user posted have been favorited -- so I'll be joining the Tweets table and the Users table")
+
+Query #1:
+
+I would create a query that would return movies with a Rotten Tomatoe Rating of 80% or above.
+
+Query #2:
+
+Another query could involve linking the Director's Twitter handle in the Movie table to the Users table and finding the number of followers that that particular director has.
+
+* What are at least 2 of the data processing mechanics you're planning to use? 
+
+- List Comprehension
+- Counter
+
+
+
+* Why will each of those be useful to you? What data might you use it on? 
+(e.g. "Set comprehension: I think I'm going to be looking for unique names and proper nouns in this big set of text, so I'm going to use a set comprehension"). 
+>>>This is especially important if you are doing Option 3, but it's important for everyone!<<<
+
+Since I am creating classes that will contain many instance varibles holding different arrtibutes to put into the database table, I can use list comprehension to link them together and then zip them into a tuple to input into a database.
+
+I could use the Counter tool to find the most popular genre of movies. 
+
+
+* What will your output look like? Will it be a .txt file? a CSV file? something else? What information will it contain? >>>This is especially important if you are doing Option 3, but it's important for everyone!<<<
+
+
+I think I would like to create a CSV file since I feel comfortable with using one. I think that my CSV file will contain:
+
+Movie Title, Release Date, Genre, Director, Actors, Rotten Tomatoes Rating, Director's Twitter Handle, # of Followers, and more?
+
