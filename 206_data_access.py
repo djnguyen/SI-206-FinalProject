@@ -120,14 +120,16 @@ def get_twitter_handle(twitter_search_query):
         dumping_results.write(json.dumps(CACHE_DICTION, indent=2))
         dumping_results.close()
 
-        twitter_handle = '@' + tweet_results[0]['screen_name']
+        twitter_handle = '@' + tweet_results[0]['screen_name'] ## can we check if it is verified?
 
         return twitter_handle
 
 def searching_twitter(twitter_search_term):
 
-    if twitter_search_term in CACHE_DICTION:
-        tweet_results = CACHE_DICTION[twitter_search_term]
+    some_identifier = "twitter_{}".format(twitter_search_term)
+
+    if some_identifier in CACHE_DICTION:
+        tweet_results = CACHE_DICTION[some_identifier]
 
         return tweet_results
 
@@ -135,7 +137,7 @@ def searching_twitter(twitter_search_term):
         try:
             tweet_results = api.search(q=twitter_search_term)
 
-            CACHE_DICTION[twitter_search_term] = tweet_results
+            CACHE_DICTION[some_identifier] = tweet_results
 
             dumping_results = open(CACHE_FNAME,'w')
             dumping_results.write(json.dumps(CACHE_DICTION, indent =2))
@@ -158,7 +160,7 @@ class Movie(object):
 
             self.title = OMDB_Dictionary['Title']
             self.plot = OMDB_Dictionary['Plot']
-            self.director = OMDB_Dictionary['Director']
+            self.director = OMDB_Dictionary['Director'].split(',')[0]
             self.genre = OMDB_Dictionary['Genre']
             self.ratings = OMDB_Dictionary['Ratings']
             self.actors = OMDB_Dictionary["Actors"]
@@ -240,41 +242,33 @@ class Movie(object):
         except:
             return "The Movie is Invalid"
 
-### DEBUGGING PLACE ###
 
-# get_out_movie = get_OMDB_data("Get Out")
+class Tweet(object):
+    def __init__(self, TWITTER_DICT = {}):
 
-# d = Movie(get_out_movie)
-
-# print (d)
-
-
-# mean_girls_movie = get_OMDB_data("Mean Girls")
-
-# e = Movie(mean_girls_movie)
-
-# print (e)
-# print ("TOP ACTOR OF MEAN GIRLS IS: ")
-# print (e.get_top_actor())
-# print (e.get_top_actor_twitter_handle())
-# print (e.get_movie_ID())
-
-# wrong_movie = get_OMDB_data('fdsfadsfsafdas')
-
-# print (wrong_movie) #{'Error': 'Movie not found!', 'Response': 'False'}
-
-# f = Movie(wrong_movie)
-# print (f)
-
+        self.tweet_query = TWITTER_DICT['search_metadata']['query']
+        self.tweet_id = [x['id_str'] for x in TWITTER_DICT['statuses']]
+        self.screen_name = [x['user']['screen_name'] for x in TWITTER_DICT['statuses']]
+        self.favorites = [x['favorite_count'] for x in TWITTER_DICT['statuses']]
+        self.retweets = [x['retweet_count'] for x in TWITTER_DICT['statuses']]
+        self.text = [x['text'] for x in TWITTER_DICT['statuses']]
 
 
 ### PUTTING IT ALL TOGETHER (ISH)
 
-mean_girls_OMDB = get_OMDB_data("Mean Girls")
-MG = Movie(mean_girls_OMDB)
+Mean_Girls = Movie(get_OMDB_data("Mean Girls"))
+MG = Tweet(searching_twitter(Mean_Girls.get_top_actor()))
+top_mean_girls_tweets = list(zip(MG.tweet_id, MG.screen_name, MG.favorites, MG.retweets, MG.text))
+
+Frozen = Movie(get_OMDB_data("Frozen"))
+FZ = Tweet(searching_twitter(Frozen.get_top_actor()))
+top_frozen_tweet = list(zip(FZ.tweet_id, FZ.screen_name, FZ.favorites, FZ.retweets, FZ.text))
+
+Fifty_Shades = Movie(get_OMDB_data("Fifty Shades of Grey"))
+FS = Tweet(searching_twitter(Fifty_Shades.get_top_actor()))
+top_fifty_shades_tweet = list(zip(FS.tweet_id, FS.screen_name, FS.favorites, FS.retweets, FS.text))
 
 
-mean_girls_twitter_search = searching_twitter(MG.get_top_actor())
 
 
 #DATABSE TESTING
@@ -295,22 +289,44 @@ create_movies_table = 'CREATE TABLE IF NOT EXISTS '
 create_movies_table += 'Movies (movie_id TEXT PRIMARY KEY, title TEXT, genre TEXT, plot TEXT, top_actor TEXT, top_actor_twitter TEXT, director TEXT, director_twitter TEXT, rotten_tomato_rating TEXT)'
 cur.execute(create_movies_table)
 
-# create_users_table = 'CREATE TABLE IF NOT EXISTS '
-# create_users_table += 'Users (user_id TEXT PRIMARY KEY, screen_name TEXT, num_favs INTEGER, description TEXT)'
-# cur.execute(create_users_table)
+create_users_table = 'CREATE TABLE IF NOT EXISTS '
+create_users_table += 'Users (user_id TEXT PRIMARY KEY, screen_name TEXT, num_favs INTEGER, description TEXT)'
+cur.execute(create_users_table)
 
-# create_tweets_table = 'CREATE TABLE IF NOT EXISTS '
-# create_tweets_table += 'Tweets (tweet_id TEXT PRIMARY KEY, text TEXT, user_id TEXT NOT NULL, time_posted TIMESTAMP, retweets INTEGER, '
-# create_tweets_table += 'FOREIGN KEY (user_id) REFERENCES Users(user_id) on UPDATE SET NULL)'
-# cur.execute(create_tweets_table)
+create_tweets_table = 'CREATE TABLE IF NOT EXISTS '
+create_tweets_table += 'Tweets (tweet_id TEXT PRIMARY KEY, screen_name TEXT, favorites INTEGER, retweets INTEGER, text TEXT, movie_id TEXT)'
+cur.execute(create_tweets_table)
 
 db_conn.commit()
 
 
-mean_girls_database_uploading = (MG.get_movie_ID(), MG.title, MG.genre, MG.plot, MG.get_top_actor(), MG.get_top_actor_twitter_handle(), MG.director, MG.get_director_twitter_handle(), MG.get_specific_rating()['Rotten Tomatoes'])
+mean_girls_database_uploading = (Mean_Girls.get_movie_ID(), Mean_Girls.title, Mean_Girls.genre, Mean_Girls.plot, Mean_Girls.get_top_actor(), Mean_Girls.get_top_actor_twitter_handle(), Mean_Girls.director, Mean_Girls.get_director_twitter_handle(), Mean_Girls.get_specific_rating()['Rotten Tomatoes'])
+frozen_database_uploading = (Frozen.get_movie_ID(), Frozen.title, Frozen.genre, Frozen.plot, Frozen.get_top_actor(), Frozen.get_top_actor_twitter_handle(), Frozen.director, Frozen.get_director_twitter_handle(), Frozen.get_specific_rating()['Rotten Tomatoes'])
+fifty_shades_database_uploading = (Fifty_Shades.get_movie_ID(), Fifty_Shades.title, Fifty_Shades.genre, Fifty_Shades.plot, Fifty_Shades.get_top_actor(), Fifty_Shades.get_top_actor_twitter_handle(), Fifty_Shades.director, Fifty_Shades.get_director_twitter_handle(), Fifty_Shades.get_specific_rating()['Rotten Tomatoes'])
+
 
 add_movie_statement = 'INSERT INTO Movies VALUES (?,?,?,?,?,?,?,?,?)'
+
 cur.execute(add_movie_statement,mean_girls_database_uploading)
+cur.execute(add_movie_statement,frozen_database_uploading)
+cur.execute(add_movie_statement,fifty_shades_database_uploading)
+
+db_conn.commit()
+
+add_tweet_statement = 'INSERT INTO Tweets VALUES (?,?,?,?,?,?)'
+
+for a_tuple_of_tweets in top_mean_girls_tweets:
+    new_tuple = a_tuple_of_tweets + (Mean_Girls.get_movie_ID(),)
+    cur.execute(add_tweet_statement, new_tuple)
+
+
+for a_tuple_of_tweets in top_frozen_tweet:
+    new_tuple = a_tuple_of_tweets + (Frozen.get_movie_ID(),)
+    cur.execute(add_tweet_statement, new_tuple)
+
+for a_tuple_of_tweets in top_fifty_shades_tweet:
+    new_tuple = a_tuple_of_tweets + (Fifty_Shades.get_movie_ID(),)
+    cur.execute(add_tweet_statement,new_tuple)
 
 db_conn.commit()
 
