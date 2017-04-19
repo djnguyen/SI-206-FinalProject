@@ -18,7 +18,7 @@ A class that I am going to define will be called "Movie"
 
 * What will that class take as input to its constructor?
 
-That class will take a Movie title as input to the constructor.
+That class will take a Dictionary/
 
 
 

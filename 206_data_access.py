@@ -23,9 +23,23 @@ import twitter_info
 import sqlite3
 import collections
 import itertools
-
 # Begin filling in instructions....
 
+## INSTRUCTIONS
+#
+# 1. Defined Three Movies: Mean Girls, Frozen, and Fifty Shades of Grey
+#
+# 2. Obtained attributes from OMDB API and put them into the Movies DATABASE TABLE
+#
+# 3. From there, I wanted to grab the top actor and their twitter handle and also put that in the Movies Database Table
+#
+# 4. I then used the Top Actor and then used a twitter search on them and obtained tweets with them. I will be using the 
+#    movie_id from the OMDB data to join the databases together.
+#
+# 5. Using the tweet data, I added them to the Tweets database.
+#
+# 6. Later, I will find information about the users who tweeted about them and put them in the USERS table and do some data analysis with it. 
+#
 
 ##### TWEEPY SETUP CODE:
 # Authentication information should be in a twitter_info file...
@@ -55,6 +69,8 @@ except:
     CACHE_DICTION = {}
 
 ### OMDB API WITH CACHING ###
+
+#This function caches data from the OMDB Database
 
 def get_OMDB_WithCaching(baseURL, params={}):
   
@@ -151,6 +167,9 @@ def searching_twitter(twitter_search_term):
 
 ### DEFINING MOVIE CLASS ###
 
+#here i defined a movie class that will display attributes from the OMDB data where I 
+# will use later to create a tuple to put into the database
+
 class Movie(object):
 
     def __init__(self, OMDB_Dictionary = {}):
@@ -243,6 +262,10 @@ class Movie(object):
             return "The Movie is Invalid"
 
 
+# i also defined a class named tweet that will iterate throught the dictionary that is returned from the 
+# Twitter Search API and put them into a list using list comprehension.
+
+
 class Tweet(object):
     def __init__(self, TWITTER_DICT = {}):
 
@@ -256,24 +279,30 @@ class Tweet(object):
 
 ### PUTTING IT ALL TOGETHER (ISH)
 
-Mean_Girls = Movie(get_OMDB_data("Mean Girls"))
-MG = Tweet(searching_twitter(Mean_Girls.get_top_actor()))
-top_mean_girls_tweets = list(zip(MG.tweet_id, MG.screen_name, MG.favorites, MG.retweets, MG.text))
 
+#Mean Girls
+Mean_Girls = Movie(get_OMDB_data("Mean Girls")) #this will get the OMDB Dictionary
+MG = Tweet(searching_twitter(Mean_Girls.get_top_actor())) #that OMDB dictionary will be be used for the Movie Class and the top actor will be searched on twitter
+top_mean_girls_tweets = list(zip(MG.tweet_id, MG.screen_name, MG.favorites, MG.retweets, MG.text)) #all of those tweet attributes will be zipped together to be used for SQL Uplaoding
+
+
+# the comments on line 284-287 will also apply to the later movies of Frozen and 50 Shades
+
+#Frozen
 Frozen = Movie(get_OMDB_data("Frozen"))
 FZ = Tweet(searching_twitter(Frozen.get_top_actor()))
 top_frozen_tweet = list(zip(FZ.tweet_id, FZ.screen_name, FZ.favorites, FZ.retweets, FZ.text))
 
+#Fifty Shades of Grey
 Fifty_Shades = Movie(get_OMDB_data("Fifty Shades of Grey"))
 FS = Tweet(searching_twitter(Fifty_Shades.get_top_actor()))
 top_fifty_shades_tweet = list(zip(FS.tweet_id, FS.screen_name, FS.favorites, FS.retweets, FS.text))
 
 
 
+#DATABSE CODE
 
-#DATABSE TESTING
-
-db_conn = sqlite3.connect('206_final_project.db')
+db_conn = sqlite3.connect('206_final_project.db') #created a database
 cur = db_conn.cursor()
 
 drop_table_statement_1 = 'DROP TABLE IF EXISTS Tweets'
@@ -287,19 +316,19 @@ cur.execute(drop_table_statement_3)
 
 create_movies_table = 'CREATE TABLE IF NOT EXISTS '
 create_movies_table += 'Movies (movie_id TEXT PRIMARY KEY, title TEXT, genre TEXT, plot TEXT, top_actor TEXT, top_actor_twitter TEXT, director TEXT, director_twitter TEXT, rotten_tomato_rating TEXT)'
-cur.execute(create_movies_table)
+cur.execute(create_movies_table) #creating the moves table
 
 create_users_table = 'CREATE TABLE IF NOT EXISTS '
 create_users_table += 'Users (user_id TEXT PRIMARY KEY, screen_name TEXT, num_favs INTEGER, description TEXT)'
-cur.execute(create_users_table)
+cur.execute(create_users_table) #creating the users table
 
 create_tweets_table = 'CREATE TABLE IF NOT EXISTS '
 create_tweets_table += 'Tweets (tweet_id TEXT PRIMARY KEY, screen_name TEXT, favorites INTEGER, retweets INTEGER, text TEXT, movie_id TEXT)'
-cur.execute(create_tweets_table)
+cur.execute(create_tweets_table) #creating the tweets table
 
 db_conn.commit()
 
-
+#creating the statements to upload to the movie table
 mean_girls_database_uploading = (Mean_Girls.get_movie_ID(), Mean_Girls.title, Mean_Girls.genre, Mean_Girls.plot, Mean_Girls.get_top_actor(), Mean_Girls.get_top_actor_twitter_handle(), Mean_Girls.director, Mean_Girls.get_director_twitter_handle(), Mean_Girls.get_specific_rating()['Rotten Tomatoes'])
 frozen_database_uploading = (Frozen.get_movie_ID(), Frozen.title, Frozen.genre, Frozen.plot, Frozen.get_top_actor(), Frozen.get_top_actor_twitter_handle(), Frozen.director, Frozen.get_director_twitter_handle(), Frozen.get_specific_rating()['Rotten Tomatoes'])
 fifty_shades_database_uploading = (Fifty_Shades.get_movie_ID(), Fifty_Shades.title, Fifty_Shades.genre, Fifty_Shades.plot, Fifty_Shades.get_top_actor(), Fifty_Shades.get_top_actor_twitter_handle(), Fifty_Shades.director, Fifty_Shades.get_director_twitter_handle(), Fifty_Shades.get_specific_rating()['Rotten Tomatoes'])
@@ -313,19 +342,21 @@ cur.execute(add_movie_statement,fifty_shades_database_uploading)
 
 db_conn.commit()
 
+#creating statements to upload to the tweets table
+
 add_tweet_statement = 'INSERT INTO Tweets VALUES (?,?,?,?,?,?)'
 
 for a_tuple_of_tweets in top_mean_girls_tweets:
-    new_tuple = a_tuple_of_tweets + (Mean_Girls.get_movie_ID(),)
+    new_tuple = a_tuple_of_tweets + (Mean_Girls.get_movie_ID(),) #I need to add the movie_id into this tuple so that I can use it as a JOIN key to link the Movies and Users database to the tweets
     cur.execute(add_tweet_statement, new_tuple)
 
 
 for a_tuple_of_tweets in top_frozen_tweet:
-    new_tuple = a_tuple_of_tweets + (Frozen.get_movie_ID(),)
+    new_tuple = a_tuple_of_tweets + (Frozen.get_movie_ID(),) #I need to add the movie_id into this tuple so that I can use it as a JOIN key to link the Movies and Users database to the tweets
     cur.execute(add_tweet_statement, new_tuple)
 
 for a_tuple_of_tweets in top_fifty_shades_tweet:
-    new_tuple = a_tuple_of_tweets + (Fifty_Shades.get_movie_ID(),)
+    new_tuple = a_tuple_of_tweets + (Fifty_Shades.get_movie_ID(),) #I need to add the movie_id into this tuple so that I can use it as a JOIN key to link the Movies and Users database to the tweets
     cur.execute(add_tweet_statement,new_tuple)
 
 db_conn.commit()
@@ -333,6 +364,8 @@ db_conn.commit()
 # Put your tests here, with any edits you now need from when you turned them in with your project plan.
 
 ### TEST SUITE ###
+# i added one database test code here. I promise to add more later!!!
+
 class Testing_OMDB_API(unittest.TestCase):
 
     def test_title(self):
@@ -392,8 +425,19 @@ class Misc_Tests(unittest.TestCase):
 
         self.assertTrue("Mean Girls" in file_contents)
 
+class Database_Testing(unittest.TestCase):
+
+    def test_db_1(self):
+        conn = sqlite3.connect('206_final_project.db')
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM Movies');
+        result = cur.fetchall()
+        self.assertTrue(len(result[1])==9,"Testing that there are 9 columns in the Movies table")
+        conn.close()
+
 
 ## Remember to invoke all your tests...
+# Remember to invoke your tests so they will run! (Recommend using the verbosity=2 argument.)
 if __name__ == "__main__":
     unittest.main(verbosity=2)
 
@@ -426,9 +470,3 @@ if __name__ == "__main__":
 #MMMMMMMMMMMMMM/-------------------------/MMMMMMMMMMMMMMMMMM
 #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-
-
-
-
-
-# Remember to invoke your tests so they will run! (Recommend using the verbosity=2 argument.)
