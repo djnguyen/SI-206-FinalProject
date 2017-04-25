@@ -24,6 +24,7 @@ import twitter_info
 import sqlite3
 import collections
 import itertools
+import re
 
 # Begin filling in instructions....
 
@@ -168,6 +169,7 @@ def searching_twitter(twitter_search_term):
 
         return tweet_results
 
+
 def twitter_user_info(twitter_handle):
 
     some_identifier = 'twitter_user_{}'.format(twitter_handle)
@@ -302,6 +304,7 @@ class Tweet(object):
         self.favorites = [x['favorite_count'] for x in TWITTER_DICT['statuses']]
         self.retweets = [x['retweet_count'] for x in TWITTER_DICT['statuses']]
         self.text = [x['text'] for x in TWITTER_DICT['statuses']]
+        self.user_id = [x['user']['id'] for x in TWITTER_DICT['statuses']]
 
 
 class TwitterUser(object):
@@ -320,8 +323,10 @@ list_of_movies = ["Mean Girls", "White Chicks", "The Secret Life of Pets"]
 movie_tuple = []
 tweet_tuple = []
 user_tuple = []
+mentioned_tuple = []
 
-# mean_girls_database_uploading = (Mean_Girls.get_movie_ID(), Mean_Girls.title, Mean_Girls.genre, Mean_Girls.plot, Mean_Girls.get_top_actor(), Mean_Girls.get_top_actor_twitter_handle(), Mean_Girls.director, Mean_Girls.get_director_twitter_handle(), Mean_Girls.get_specific_rating()['Rotten Tomatoes'])
+actor_twitter = []
+tweeter = []
 
 def uploading_databases():
 
@@ -331,13 +336,19 @@ def uploading_databases():
 
         some_tuple = (m.get_movie_ID(),m.title, m.genre, m.plot, m.get_top_actor(), m.get_top_actor_twitter_handle(), m.director, m.get_director_twitter_handle(), m.get_specific_rating()['Rotten Tomatoes'])
 
+        actor_twitter.append(m.get_top_actor_twitter_handle())
+
         movie_tuple.append(some_tuple)
 
         t = Tweet(searching_twitter(m.get_top_actor()))
 
-        another_tuple = list(zip(t.tweet_id, t.screen_name, t.favorites, t.retweets, t.text))
+        another_tuple = list(zip(t.tweet_id, t.screen_name, t.user_id, t.favorites, t.retweets, t.text))
+
+        tweeter.append(t.screen_name)
 
         final_tweet_list = []
+
+
 
         for a_tuple in another_tuple:
             
@@ -351,12 +362,65 @@ def uploading_databases():
 
         user = TwitterUser(twitter_user_info(m.get_top_actor_twitter_handle()))
 
-        user_info_tuple = (user.id, user.handle, user.followers, user.favorites, user.description, m.get_movie_ID())
+        user_info_tuple = (user.id, user.handle, user.followers, user.favorites, user.description)
 
         user_tuple.append(user_info_tuple)
 
+        mentioned_tuple.append(t.text)
+
 uploading_databases()
 
+ALL_TWEETERS = []
+
+for tweet in tweeter:
+    for x in tweet:
+        final = "@" + x
+        ALL_TWEETERS.append(final)
+
+
+
+# final_tweeter_list = []
+
+
+# def unique_tweeter(more_list):
+#     for x in more_list:
+#         if x not in actor_twitter:
+#             final_tweeter_list.append(x)
+
+# unique_tweeter(tweeter)
+
+combined = actor_twitter + ALL_TWEETERS
+
+individual_tweet = []
+mentioned_users = []
+final_user_database = []
+
+for x in mentioned_tuple:
+    for y in x:
+        individual_tweet.append(y)
+
+def unique_handle(some_list):
+    for x in some_list:
+        if x not in combined:
+                mentioned_users.append(x)
+
+for a_tweet in individual_tweet:
+
+    if "@" in a_tweet:
+        a_user = re.findall(r"(@[A-Za-z0-9_]+)", a_tweet)
+
+        unique_handle(a_user)
+
+final_user_list = combined + mentioned_users
+
+ALMOST_FINAL_USERS_NO_DUPLICATES = set(final_user_list)
+FINAL_USERS_NO_DUPLICATES = list(ALMOST_FINAL_USERS_NO_DUPLICATES) 
+
+for x in FINAL_USERS_NO_DUPLICATES:
+    user = TwitterUser(twitter_user_info(x))
+    user_info_tuple_2 = (user.id, user.handle, user.followers, user.favorites, user.description)
+
+    final_user_database.append(user_info_tuple_2)
 
 
 
@@ -379,11 +443,11 @@ create_movies_table += 'Movies (movie_id TEXT PRIMARY KEY, title TEXT, genre TEX
 cur.execute(create_movies_table) #creating the moves table
 
 create_users_table = 'CREATE TABLE IF NOT EXISTS '
-create_users_table += 'Users (user_id TEXT PRIMARY KEY, screen_name TEXT, followers INTEGER, num_favs INTEGER, description TEXT, movie_id TEXT)'
+create_users_table += 'Users (user_id TEXT PRIMARY KEY, screen_name TEXT, followers INTEGER, num_favs INTEGER, description TEXT)'
 cur.execute(create_users_table) #creating the users table
 
 create_tweets_table = 'CREATE TABLE IF NOT EXISTS '
-create_tweets_table += 'Tweets (tweet_id TEXT PRIMARY KEY, screen_name TEXT, favorites INTEGER, retweets INTEGER, text TEXT, movie_id TEXT)'
+create_tweets_table += 'Tweets (tweet_id TEXT PRIMARY KEY, screen_name TEXT, user_id TEXT, favorites INTEGER, retweets INTEGER, text TEXT, movie_id TEXT)'
 cur.execute(create_tweets_table) #creating the tweets table
 
 db_conn.commit()
@@ -403,20 +467,7 @@ db_conn.commit()
 
 # creating statements to upload to the tweets table
 
-add_tweet_statement = 'INSERT INTO Tweets VALUES (?,?,?,?,?,?)'
-
-# for a_tuple_of_tweets in top_mean_girls_tweets:
-#     new_tuple = a_tuple_of_tweets + (Mean_Girls.get_movie_ID(),) #I need to add the movie_id into this tuple so that I can use it as a JOIN key to link the Movies and Users database to the tweets
-#     cur.execute(add_tweet_statement, new_tuple)
-
-
-# for a_tuple_of_tweets in top_frozen_tweet:
-#     new_tuple = a_tuple_of_tweets + (Frozen.get_movie_ID(),) #I need to add the movie_id into this tuple so that I can use it as a JOIN key to link the Movies and Users database to the tweets
-#     cur.execute(add_tweet_statement, new_tuple)
-
-# for a_tuple_of_tweets in top_fifty_shades_tweet:
-#     new_tuple = a_tuple_of_tweets + (Fifty_Shades.get_movie_ID(),) #I need to add the movie_id into this tuple so that I can use it as a JOIN key to link the Movies and Users database to the tweets
-#     cur.execute(add_tweet_statement,new_tuple)
+add_tweet_statement = 'INSERT INTO Tweets VALUES (?,?,?,?,?,?,?)'
 
 for x in tweet_tuple:
     for y in x:
@@ -424,119 +475,120 @@ for x in tweet_tuple:
 
 db_conn.commit()
 
-add_user_statement = 'INSERT INTO Users VALUES (?,?,?,?,?,?)'
+add_user_statement = 'INSERT INTO Users VALUES (?,?,?,?,?)'
 
-for x in user_tuple:
+for x in final_user_database:
     cur.execute(add_user_statement,x)
 
 db_conn.commit()
 
-# # Put your tests here, with any edits you now need from when you turned them in with your project plan.
 
-# ### TEST SUITE ###
-# # i added one database test code here. I promise to add more later!!!
+# Put your tests here, with any edits you now need from when you turned them in with your project plan.
 
-# class Testing_OMDB_API(unittest.TestCase):
+### TEST SUITE ###
+# i added one database test code here. I promise to add more later!!!
 
-#     def test_title(self):
-#         mean_girls = get_OMDB_data("Mean Girls")
-#         self.assertEqual(mean_girls['Title'], "Mean Girls", "checking that title is the same")
+class Testing_OMDB_API(unittest.TestCase):
 
-#     def test_director(self):
-#         mean_girls = get_OMDB_data("Mean Girls")
-#         self.assertEqual(mean_girls['Director'], "Mark Waters", 'checking for director')
+    def test_title(self):
+        mean_girls = get_OMDB_data("Mean Girls")
+        self.assertEqual(mean_girls['Title'], "Mean Girls", "checking that title is the same")
 
-#     def test_genre(self):
-#         mean_girls = get_OMDB_data("Mean Girls")
-#         self.assertEqual(mean_girls['Genre'], "Comedy", 'checking for genre')
+    def test_director(self):
+        mean_girls = get_OMDB_data("Mean Girls")
+        self.assertEqual(mean_girls['Director'], "Mark Waters", 'checking for director')
 
-#     def test_actors(self):
-#         mean_girls = get_OMDB_data("Mean Girls")
-#         self.assertEqual(type(mean_girls['Actors']), type(""))
+    def test_genre(self):
+        mean_girls = get_OMDB_data("Mean Girls")
+        self.assertEqual(mean_girls['Genre'], "Comedy", 'checking for genre')
 
-# class Testing_Movie_Class(unittest.TestCase):
+    def test_actors(self):
+        mean_girls = get_OMDB_data("Mean Girls")
+        self.assertEqual(type(mean_girls['Actors']), type(""))
+
+class Testing_Movie_Class(unittest.TestCase):
 
         
-#     def test_title(self):
-#         mean_girls_movies = get_OMDB_data("Mean Girls")
-#         m1 = Movie(mean_girls_movies)
-#         self.assertEqual(m1.title, "Mean Girls")
+    def test_title(self):
+        mean_girls_movies = get_OMDB_data("Mean Girls")
+        m1 = Movie(mean_girls_movies)
+        self.assertEqual(m1.title, "Mean Girls")
 
-#     def test_string(self):
-#         mean_girls_movies = get_OMDB_data("Mean Girls")
-#         m2 = Movie(mean_girls_movies)
-#         self.assertEqual(m2.__str__(), "The movie Mean Girls is a Comedy, and was directed by Mark Waters. Mean Girls also has a Rotten Tomatoes Score of 84%.")
+    def test_string(self):
+        mean_girls_movies = get_OMDB_data("Mean Girls")
+        m2 = Movie(mean_girls_movies)
+        self.assertEqual(m2.__str__(), "The movie Mean Girls is a Comedy, and was directed by Mark Waters. Mean Girls also has a Rotten Tomatoes Score of 84%.")
 
-#     def test_rotten_tomatos(self):
-#         mean_girls_movies = get_OMDB_data("Mean Girls")
-#         m3 = Movie(mean_girls_movies)
-#         rating = m3.get_specific_rating()
-#         rotten_tomato = rating['Rotten Tomatoes']
-#         self.assertEqual(rotten_tomato, "84%")
+    def test_rotten_tomatos(self):
+        mean_girls_movies = get_OMDB_data("Mean Girls")
+        m3 = Movie(mean_girls_movies)
+        rating = m3.get_specific_rating()
+        rotten_tomato = rating['Rotten Tomatoes']
+        self.assertEqual(rotten_tomato, "84%")
 
-#     def test_Metacritic_score(self):
-#         mean_girls_movies = get_OMDB_data("Mean Girls")
-#         m4 = Movie(mean_girls_movies)
-#         rating = m4.get_specific_rating()
-#         metacritic = rating['Metacritic']
-#         self.assertEqual(metacritic, "66/100")
+    def test_Metacritic_score(self):
+        mean_girls_movies = get_OMDB_data("Mean Girls")
+        m4 = Movie(mean_girls_movies)
+        rating = m4.get_specific_rating()
+        metacritic = rating['Metacritic']
+        self.assertEqual(metacritic, "66/100")
 
-#     def test_director_twitter_handle(self):
-#         get_out = get_OMDB_data("Get Out")
-#         m5 = Movie(get_out)
-#         self.assertEqual(m5.get_director_twitter_handle(), "@JordanPeele")
+    def test_director_twitter_handle(self):
+        get_out = get_OMDB_data("Get Out")
+        m5 = Movie(get_out)
+        self.assertEqual(m5.get_director_twitter_handle(), "@JordanPeele")
 
-# class Misc_Tests(unittest.TestCase):
+class Misc_Tests(unittest.TestCase):
 
-#     def test_caching(self):
-#         file = open("FINAL.json", 'r')
-#         file_contents = file.read()
-#         file.close()
+    def test_caching(self):
+        file = open("FINAL.json", 'r')
+        file_contents = file.read()
+        file.close()
 
-#         self.assertTrue("Mean Girls" in file_contents)
+        self.assertTrue("Mean Girls" in file_contents)
 
-# class Database_Testing(unittest.TestCase):
+class Database_Testing(unittest.TestCase):
 
-#     def test_db_1(self):
-#         conn = sqlite3.connect('206_final_project.db')
-#         cur = conn.cursor()
-#         cur.execute('SELECT * FROM Movies');
-#         result = cur.fetchall()
-#         self.assertTrue(len(result[1])==9,"Testing that there are 9 columns in the Movies table")
-#         conn.close()
-
-
-# ## Remember to invoke all your tests...
-# # Remember to invoke your tests so they will run! (Recommend using the verbosity=2 argument.)
-# if __name__ == "__main__":
-#     unittest.main(verbosity=2)
+    def test_db_1(self):
+        conn = sqlite3.connect('206_final_project.db')
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM Movies');
+        result = cur.fetchall()
+        self.assertTrue(len(result[1])==9,"Testing that there are 9 columns in the Movies table")
+        conn.close()
 
 
-# #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-# #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-# #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-# #MMMMMMM             MMMMMMMMMMMMMMMMM             MMMMMMMMM
-# #MMMMMMM              MMMMMMMMMMMMMMM              MMMMMMMMM
-# #MMMMMMM                MMMMMMMMMMM                MMMMMMMMM
-# #MMMMMMM                 MMMMMMMMM                 MMMMMMMMM
-# #MMMMMMM                  MMMMMMM                  MMMMMMMMM
-# #MMMMMMMMMMM               MMMMM                MMMMMMMMMMMM
-# #MMMMMMMMMMM                MMM                 MMMMMMMMMMMM
-# #MMMMMMMMMMM                 V                  MMMMMMMMMMMM
-# #MMMMMMMMMMM                                    MMMMMMMMMMMM
-# #MMMMMMMMMMM         ^               ^          MMMMMMMMMMMM
-# #MMMMMMMMMMM         MM             MM          MMMMMMMMMMMM
-# #MMMMMMMMMMM         MMMM         MMMM          MMMMMMMMMMMM
-# #MMMMMMMMMMM         MMMMM       MMMMM          MMMMMMMMMMMM
-# #MMMMMMMMMMM         MMMMMM     MMMMMM          MMMMMMMMMMMM
-# #MMMMMMM                MMMM   MMMM                MMMMMMMMM
-# #MMMMMMM                MMMMMVMMMMM                MMMMMMMMM
-# #MMMMMMM                MMMMMMMMMMM                MMMMMMMMM
-# #MMMMMMM                MMMMMMMMMMM                MMMMMMMMM
-# #MMMMMMM                MMMMMMMMMMM                MMMMMMMMM
-# #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-# #MMMMMMMMMMMMMMMM/-------------------------/MMMMMMMMMMMMMMMM
-# #MMMMMMMMMMMMMMM/- SCHOOL OF INFORMATION -/MMMMMMMMMMMMMMMMM
-# #MMMMMMMMMMMMMM/-------------------------/MMMMMMMMMMMMMMMMMM
-# #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-# #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+## Remember to invoke all your tests...
+# Remember to invoke your tests so they will run! (Recommend using the verbosity=2 argument.)
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
+
+
+#MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+#MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+#MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+#MMMMMMM             MMMMMMMMMMMMMMMMM             MMMMMMMMM
+#MMMMMMM              MMMMMMMMMMMMMMM              MMMMMMMMM
+#MMMMMMM                MMMMMMMMMMM                MMMMMMMMM
+#MMMMMMM                 MMMMMMMMM                 MMMMMMMMM
+#MMMMMMM                  MMMMMMM                  MMMMMMMMM
+#MMMMMMMMMMM               MMMMM                MMMMMMMMMMMM
+#MMMMMMMMMMM                MMM                 MMMMMMMMMMMM
+#MMMMMMMMMMM                 V                  MMMMMMMMMMMM
+#MMMMMMMMMMM                                    MMMMMMMMMMMM
+#MMMMMMMMMMM         ^               ^          MMMMMMMMMMMM
+#MMMMMMMMMMM         MM             MM          MMMMMMMMMMMM
+#MMMMMMMMMMM         MMMM         MMMM          MMMMMMMMMMMM
+#MMMMMMMMMMM         MMMMM       MMMMM          MMMMMMMMMMMM
+#MMMMMMMMMMM         MMMMMM     MMMMMM          MMMMMMMMMMMM
+#MMMMMMM                MMMM   MMMM                MMMMMMMMM
+#MMMMMMM                MMMMMVMMMMM                MMMMMMMMM
+#MMMMMMM                MMMMMMMMMMM                MMMMMMMMM
+#MMMMMMM                MMMMMMMMMMM                MMMMMMMMM
+#MMMMMMM                MMMMMMMMMMM                MMMMMMMMM
+#MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+#MMMMMMMMMMMMMMMM/-------------------------/MMMMMMMMMMMMMMMM
+#MMMMMMMMMMMMMMM/- SCHOOL OF INFORMATION -/MMMMMMMMMMMMMMMMM
+#MMMMMMMMMMMMMM/-------------------------/MMMMMMMMMMMMMMMMMM
+#MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+#MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
