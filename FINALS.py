@@ -235,6 +235,30 @@ class Movie(object):
         except:
             return "ERROR"
 
+    def get_rotten_tomato_rating(self):
+        
+        try:
+            all_ratings = self.ratings
+
+            rating_source = []
+            rating_score = []
+
+            for x in all_ratings:
+                rating_source.append(x['Source'])
+                rating_score.append(x['Value'])
+
+            ratings_dict = dict(zip(rating_source,rating_score))
+
+            rotten_tomato_unparsed = ratings_dict['Rotten Tomatoes']
+
+            rotten_tomato_number = rotten_tomato_unparsed.split('%')
+
+            return int(rotten_tomato_number[0])
+
+        except:
+            return "ERROR"
+
+
     def get_top_actor(self):
 
         try:
@@ -317,7 +341,7 @@ class TwitterUser(object):
         self.description = TWITTER_DICT['description']
 
 
-list_of_movies = ["Mean Girls", "White Chicks", "The Secret Life of Pets"]
+list_of_movies = ["Mean Girls", "White Chicks", "The Secret Life of Pets", "The Fate of the Furious", "Logan", "Good Will Hunting"]
 
 
 movie_tuple = []
@@ -334,7 +358,7 @@ def uploading_databases():
 
         m = Movie(get_OMDB_data(a_movie))
 
-        some_tuple = (m.get_movie_ID(),m.title, m.genre, m.plot, m.get_top_actor(), m.get_top_actor_twitter_handle(), m.director, m.get_director_twitter_handle(), m.get_specific_rating()['Rotten Tomatoes'])
+        some_tuple = (m.get_movie_ID(),m.title, m.genre, m.plot, m.get_top_actor(), m.get_top_actor_twitter_handle(), m.director, m.get_director_twitter_handle(), m.get_rotten_tomato_rating())
 
         actor_twitter.append(m.get_top_actor_twitter_handle())
 
@@ -348,13 +372,13 @@ def uploading_databases():
 
         final_tweet_list = []
 
-
-
         for a_tuple in another_tuple:
             
             d = m.get_movie_ID()
 
-            new = a_tuple + (d,)
+            search_title = t.tweet_query
+
+            new = a_tuple + (d,) + (search_title, )
 
             final_tweet_list.append(new)
 
@@ -377,17 +401,6 @@ for tweet in tweeter:
         final = "@" + x
         ALL_TWEETERS.append(final)
 
-
-
-# final_tweeter_list = []
-
-
-# def unique_tweeter(more_list):
-#     for x in more_list:
-#         if x not in actor_twitter:
-#             final_tweeter_list.append(x)
-
-# unique_tweeter(tweeter)
 
 combined = actor_twitter + ALL_TWEETERS
 
@@ -439,7 +452,7 @@ drop_table_statement_3 = 'DROP TABLE IF EXISTS Movies'
 cur.execute(drop_table_statement_3)
 
 create_movies_table = 'CREATE TABLE IF NOT EXISTS '
-create_movies_table += 'Movies (movie_id TEXT PRIMARY KEY, title TEXT, genre TEXT, plot TEXT, top_actor TEXT, top_actor_twitter TEXT, director TEXT, director_twitter TEXT, rotten_tomato_rating TEXT)'
+create_movies_table += 'Movies (movie_id TEXT PRIMARY KEY, title TEXT, genre TEXT, plot TEXT, top_actor TEXT, top_actor_twitter TEXT, director TEXT, director_twitter TEXT, rotten_tomato_rating INTEGER)'
 cur.execute(create_movies_table) #creating the moves table
 
 create_users_table = 'CREATE TABLE IF NOT EXISTS '
@@ -447,15 +460,11 @@ create_users_table += 'Users (user_id TEXT PRIMARY KEY, screen_name TEXT, follow
 cur.execute(create_users_table) #creating the users table
 
 create_tweets_table = 'CREATE TABLE IF NOT EXISTS '
-create_tweets_table += 'Tweets (tweet_id TEXT PRIMARY KEY, screen_name TEXT, user_id TEXT, favorites INTEGER, retweets INTEGER, text TEXT, movie_id TEXT)'
+create_tweets_table += 'Tweets (tweet_id TEXT PRIMARY KEY, screen_name TEXT, user_id TEXT, favorites INTEGER, retweets INTEGER, text TEXT, movie_id TEXT, search_query TEXT, '
+create_tweets_table += 'FOREIGN KEY (user_id) REFERENCES Users(user_id) on UPDATE SET NULL, FOREIGN KEY (movie_id) REFERENCES Movies(movie_id) on UPDATE SET NULL)'
 cur.execute(create_tweets_table) #creating the tweets table
 
 db_conn.commit()
-
-#creating the statements to upload to the movie table
-# mean_girls_database_uploading = (Mean_Girls.get_movie_ID(), Mean_Girls.title, Mean_Girls.genre, Mean_Girls.plot, Mean_Girls.get_top_actor(), Mean_Girls.get_top_actor_twitter_handle(), Mean_Girls.director, Mean_Girls.get_director_twitter_handle(), Mean_Girls.get_specific_rating()['Rotten Tomatoes'])
-# frozen_database_uploading = (Frozen.get_movie_ID(), Frozen.title, Frozen.genre, Frozen.plot, Frozen.get_top_actor(), Frozen.get_top_actor_twitter_handle(), Frozen.director, Frozen.get_director_twitter_handle(), Frozen.get_specific_rating()['Rotten Tomatoes'])
-# fifty_shades_database_uploading = (Fifty_Shades.get_movie_ID(), Fifty_Shades.title, Fifty_Shades.genre, Fifty_Shades.plot, Fifty_Shades.get_top_actor(), Fifty_Shades.get_top_actor_twitter_handle(), Fifty_Shades.director, Fifty_Shades.get_director_twitter_handle(), Fifty_Shades.get_specific_rating()['Rotten Tomatoes'])
 
 
 add_movie_statement = 'INSERT INTO Movies VALUES (?,?,?,?,?,?,?,?,?)'
@@ -467,7 +476,7 @@ db_conn.commit()
 
 # creating statements to upload to the tweets table
 
-add_tweet_statement = 'INSERT INTO Tweets VALUES (?,?,?,?,?,?,?)'
+add_tweet_statement = 'INSERT INTO Tweets VALUES (?,?,?,?,?,?,?,?)'
 
 for x in tweet_tuple:
     for y in x:
@@ -481,6 +490,26 @@ for x in final_user_database:
     cur.execute(add_user_statement,x)
 
 db_conn.commit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Put your tests here, with any edits you now need from when you turned them in with your project plan.
@@ -525,6 +554,12 @@ class Testing_Movie_Class(unittest.TestCase):
         rating = m3.get_specific_rating()
         rotten_tomato = rating['Rotten Tomatoes']
         self.assertEqual(rotten_tomato, "84%")
+
+    def test_rotten_tomatoes_2(self):
+        mean_girls_movies = get_OMDB_data("Mean Girls")
+        m3 = Movie(mean_girls_movies)
+        rating = m3.get_rotten_tomato_rating()
+        self.assertEqual(rating, 84)
 
     def test_Metacritic_score(self):
         mean_girls_movies = get_OMDB_data("Mean Girls")
