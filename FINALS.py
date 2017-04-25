@@ -1,19 +1,3 @@
-###### INSTRUCTIONS ###### 
-
-# An outline for preparing your final project assignment is in this file.
-
-# Below, throughout this file, you should put comments that explain exactly what you should do for each step of your project. You should specify variable names and processes to use. For example, "Use dictionary accumulation with the list you just created to create a dictionary called tag_counts, where the keys represent tags on flickr photos and the values represent frequency of times those tags occur in the list."
-
-# You can use second person ("You should...") or first person ("I will...") or whatever is comfortable for you, as long as you are clear about what should be done.
-
-# Some parts of the code should already be filled in when you turn this in:
-# - At least 1 function which gets and caches data from 1 of your data sources, and an invocation of each of those functions to show that they work 
-# - Tests at the end of your file that accord with those instructions (will test that you completed those instructions correctly!)
-# - Code that creates a database file and tables as your project plan explains, such that your program can be run over and over again without error and without duplicate rows in your tables.
-# - At least enough code to load data into 1 of your dtabase tables (this should accord with your instructions/tests)
-
-######### END INSTRUCTIONS #########
-
 # Put all import statements you need here.
 
 import unittest
@@ -25,25 +9,6 @@ import sqlite3
 import collections
 import itertools
 import re
-
-# Begin filling in instructions....
-
-## INSTRUCTIONS
-#
-# 1. Defined Three Movies: Mean Girls, Get Out, The Secret Life of Pets
-#
-# 2. Obtained attributes from OMDB API and put them into the Movies DATABASE TABLE
-#
-# 3. From there, I wanted to grab the top actor and their twitter handle and also put that in the Movies Database Table
-#
-# 4. I then used the Top Actor and then used a twitter search on them and obtained tweets with them. I will be using the 
-#    movie_id from the OMDB data to join the databases together.
-#
-# 5. Using the tweet data, I added them to the Tweets database.
-#
-# 6. Later, I will find information about the users who tweeted about them and put them in the USERS table and do some data analysis with it. 
-#
-# Some could include finding the most common word, using sentiment analysis and giving it an Emotional Score (Similar to SI 106 PSET), etc
 
 ##### TWEEPY SETUP CODE:
 # Authentication information should be in a twitter_info file...
@@ -537,7 +502,9 @@ movie_list = cur.fetchall()
 
 sorted_ratings = sorted(movie_list, key=lambda x: x[2], reverse = True)
 
-top_movie_w_rating = movie_list[0][0]
+top_movie_w_rating = sorted_ratings[0]
+
+print (top_movie_w_rating)
 
 
 all_plots = []
@@ -552,26 +519,69 @@ for x in all_plots:
     for y in x.split():
         final_plots.append(y)
 
-print ("The Most Common Word in the Plot is: ")
+# print ("The Most Common Word in the Plot is: ")
 common_plot_word = collections.Counter(final_plots)
-print (common_plot_word.most_common()[0])
-print (common_plot_word.most_common()[1])
+# print (common_plot_word.most_common()[0])
+# print (common_plot_word.most_common()[1])
 
 
+#Task 4: Text File Summary
 
 
+# #CREATING A TXT FILE
+outfile = open('finalproject.txt', 'w')
+outfile.write("David's Summary Statistics for Movies & Twitter as of April 25, 2017 \n \n \n \n")
+
+outfile.write("The Movies that I obtained data on are: \n")
+
+for x in list_of_movies:
+    outfile.write("    - {} \n".format(x))
+
+outfile.write("\n\n\n\nHere are some of the information of the movies that I gathered:\n")
+
+for x in movie_tuple:
+
+    outfile.write("---------------------------------------------------------\n")
+    outfile.write("Title: {}\n\n".format(x[1]))
+    outfile.write("Genre: {}\n\n".format(x[2]))
+    outfile.write("Plot: {}\n\n".format(x[3]))
+    outfile.write("Top Actor: {}\n\n".format(x[4]))
+    outfile.write("Top Actor Twiter Handle: {}\n\n".format(x[5]))
+    outfile.write("Director: {}\n\n".format(x[6]))
+    outfile.write("Rotten Tomato Rating: {}/100\n\n".format(x[8]))
+
+outfile.write("---------------------------------------------------------\n")
+
+outfile.write("Looking at all of the tweets from all of these mentions of the actors, here is a list of words used in the tweet:\n\n")
+
+outfile.write('{}\n'.format(tweet_words))
+
+outfile.write("---------------------------------------------------------\n")
+
+outfile.write("The Most Common Character in all of the Tweets is:\n\n")
+outfile.write('The Character: \'{}\' with {} occurances\n\n'.format(most_common_char[0],most_common_char[1]))
+
+outfile.write("---------------------------------------------------------\n")
+
+outfile.write("It's also important to look for the most popular movie based on Rotten Tomatoes Ratings!\n\n")
+
+outfile.write("The Top Rated Movie out of the list of movies above is: {} with a rating of {}/100! \n\n".format(top_movie_w_rating[0],top_movie_w_rating[2]))
+
+outfile.write("---------------------------------------------------------\n")
+
+outfile.write("Also looking at the plot of ALL the movies in the list above, we looked for the two most common words in the plot: \n\n")
+
+outfile.write("Those two words are: \n")
+
+outfile.write("\'{}\' with {} occurances\n\n".format(common_plot_word.most_common()[0][0], common_plot_word.most_common()[0][1]))
+outfile.write("and\n\n")
+outfile.write("\'{}\' with {} occurances\n\n".format(common_plot_word.most_common()[1][0], common_plot_word.most_common()[1][1]))
 
 
+outfile.write("---------------------------------------------------------\n")
 
-
-
-
-
-
-
-
-
-
+outfile.write("Thanks for running my program! Have an aMAIZEing day!")
+outfile.close()
 
 # Put your tests here, with any edits you now need from when you turned them in with your project plan.
 

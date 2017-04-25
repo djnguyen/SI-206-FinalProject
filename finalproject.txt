@@ -1,0 +1,148 @@
+David's Summary Statistics for Movies & Twitter as of April 25, 2017 
+ 
+ 
+ 
+The Movies that I obtained data on are: 
+    - Mean Girls 
+    - White Chicks 
+    - The Secret Life of Pets 
+    - The Fate of the Furious 
+    - Logan 
+    - Good Will Hunting 
+    - Inception 
+
+
+
+
+Here are some of the information of the movies that I gathered:
+---------------------------------------------------------
+Title: Mean Girls
+
+Genre: Comedy
+
+Plot: Her parents being zoologists, homeschooled Cady Heron lived in Africa for 15 years. Attending a Chicago public high school for the first time, she starts out by befriending the "best people you will meet", Janis, a supposedly lesbian girl; and Damian, a boy "too gay to function". Cady is warned to avoid the "worst people you will ever meet", the Plastics--a clique comprised of three girls: Gretchen Wieners, a girl who's rich because her father invented toaster strudel; Karen Smith, the "dumbest girl you will ever meet"; and Regina George, the unofficial leader and the meanest one. She becomes a hit with the Plastics and eventually assimilates into the clique, only for Janis to ask her sabotage them. After conflicts involving Regina's ex-boyfriend, Aaron Samuels, Cady later becomes tied between being part of them or sabotaging them. Whilst eventually becoming one, she sabotages them. She tricks Regina into eating fattening candy bars that she claims will make her skinny, tries to break her and Samuel up, and tries to turn her fellow Plastics, Karen and Gretchen against her. Will she be caught? Will she become too Plastic and become the fourth Plastic?
+
+Top Actor: Lindsay Lohan
+
+Top Actor Twiter Handle: @lindsaylohan
+
+Director: Mark Waters
+
+Rotten Tomato Rating: 84/100
+
+---------------------------------------------------------
+Title: White Chicks
+
+Genre: Comedy, Crime
+
+Plot: After an unsuccessful mission, FBI agents Kevin Copeland and Marcus Copeland fall in disgrace in the agency. They decide to swap their bad position with his superior Section Chief Elliott Gordon working undercover in an abduction case, disguised in the two spoiled white daughters of a tycoon, Brittany and Tiffany Wilson, getting in hilarious situations.
+
+Top Actor: Shawn Wayans
+
+Top Actor Twiter Handle: @shawn_wayans
+
+Director: Keenen Ivory Wayans
+
+Rotten Tomato Rating: 15/100
+
+---------------------------------------------------------
+Title: The Secret Life of Pets
+
+Genre: Animation, Adventure, Comedy
+
+Plot: Taking place in a Manhattan apartment building, Max's life as a favorite pet is turned upside down, when his owner brings home a sloppy mongrel named Duke. They have to put their quarrels behind when they find out that an adorable white bunny named Snowball is building an army of lost pets determined to take revenge
+
+Top Actor: Louis C.K.
+
+Top Actor Twiter Handle: @LouieFX
+
+Director: Chris Renaud
+
+Rotten Tomato Rating: 74/100
+
+---------------------------------------------------------
+Title: The Fate of the Furious
+
+Genre: Action, Crime, Thriller
+
+Plot: Now that Dom and Letty are on their honeymoon and Brian and Mia have retired from the game-and the rest of the crew has been exonerated-the globetrotting team has found a semblance of a normal life. But when a mysterious woman seduces Dom into the world of crime he can't seem to escape and a betrayal of those closest to him, they will face trials that will test them as never before. From the shores of Cuba and the streets of New York City to the icy plains off the arctic Barents Sea, the elite force will crisscross the globe to stop an anarchist from unleashing chaos on the world's stage... and to bring home the man who made them a family.
+
+Top Actor: Scott Eastwood
+
+Top Actor Twiter Handle: @ScottEastwood
+
+Director: F. Gary Gray
+
+Rotten Tomato Rating: 66/100
+
+---------------------------------------------------------
+Title: Logan
+
+Genre: Action, Drama, Sci-Fi
+
+Plot: In 2029 the mutant population has shrunken significantly and the X-Men have disbanded. Logan, whose power to self-heal is dwindling, has surrendered himself to alcohol and now earns a living as a chauffeur. He takes care of the ailing old Professor X whom he keeps hidden away. One day, a female stranger asks Logan to drive a girl named Laura to the Canadian border. At first he refuses, but the Professor has been waiting for a long time for her to appear. Laura possesses an extraordinary fighting prowess and is in many ways like Wolverine. She is pursued by sinister figures working for a powerful corporation; this is because her DNA contains the secret that connects her to Logan. A relentless pursuit begins - In this third cinematic outing featuring the Marvel comic book character Wolverine we see the superheroes beset by everyday problems. They are aging, ailing and struggling to survive financially. A decrepit Logan is forced to ask himself if he can or even wants to put his remaining powers to good use. It would appear that in the near-future, the times in which they were able put the world to rights with razor sharp claws and telepathic powers are now over.
+
+Top Actor: Hugh Jackman
+
+Top Actor Twiter Handle: @RealHughJackman
+
+Director: James Mangold
+
+Rotten Tomato Rating: 92/100
+
+---------------------------------------------------------
+Title: Good Will Hunting
+
+Genre: Drama
+
+Plot: A touching tale of a wayward young man who struggles to find his identity, living in a world where he can solve any problem, except the one brewing deep within himself, until one day he meets his soul mate who opens his mind and his heart.
+
+Top Actor: Matt Damon
+
+Top Actor Twiter Handle: @mattdamon_
+
+Director: Gus Van Sant
+
+Rotten Tomato Rating: 97/100
+
+---------------------------------------------------------
+Title: Inception
+
+Genre: Action, Adventure, Sci-Fi
+
+Plot: Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction, stealing valuable secrets from deep within the subconscious during the dream state, when the mind is at its most vulnerable. Cobb's rare ability has made him a coveted player in this treacherous new world of corporate espionage, but it has also made him an international fugitive and cost him everything he has ever loved. Now Cobb is being offered a chance at redemption. One last job could give him his life back but only if he can accomplish the impossible - inception. Instead of the perfect heist, Cobb and his team of specialists have to pull off the reverse: their task is not to steal an idea but to plant one. If they succeed, it could be the perfect crime. But no amount of careful planning or expertise can prepare the team for the dangerous enemy that seems to predict their every move. An enemy that only Cobb could have seen coming.
+
+Top Actor: Leonardo DiCaprio
+
+Top Actor Twiter Handle: @LeoDiCaprio
+
+Director: Christopher Nolan
+
+Rotten Tomato Rating: 86/100
+
+---------------------------------------------------------
+Looking at all of the tweets from all of these mentions of the actors, here is a list of words used in the tweet:
+
+{"L'Officiel", 'Nobody)', 'through', 'la', 'We', '@RideOrDie_FFRP:', 'https://t.co/iu3PyAFaxc', 'James', 'Thursday', 'within', 'there', 'Exclusive:', 'slip', 'Eastwood),', 'Cate', 'pelea', 'Hunting"', 'Choreography', 'next', 'https://t.co/KDpkjQy9Dv', 'Take', 'mesmo??', 'di', 'right!', 'actually', 'McAvoy,', 'heart,', '"When', 'https://t.co/ZHr6Jpnm4w', 'https://t.co/YdJP73ZsRj', "'GTAV'", 'sexy', 'love', 'https://t.co/UhUf4bWq1j', 'You', 'ha', 'https://t.co/CFhpSZG4xZ', 'Blanchett', 'Got', '@WhatsappsVideos:', 'Cameron).', 'SCOOP', 'gustado', 'el', 'For', 'Shawn', 'sci-fi', '„Jason', '#NashFilm17!', 'con', 'Retweet', 'If', 'costars', 'Career', 'Bourne', 'sex', 'Eric', "DiCaprio's", 'Monologue', 'llegó', 'I', '#male', 'bleached-blonde', 'novato', 'Lake', 'tonight', 'also', 'new', 'https://t.co/vHIeFHSv9A', 'never', 'understand', 'Car', 'Selfies...', '#Marlon', 'why', 'liked', 'John', 'deep', 'via', 'Happy', 'https://t.co/jcMCA7Sic4', 'weed', 'https://t.co/4INY9k3Ov8', '#videos', 'Magazine,', '@CapitalMexico:', ',SCARLETT', 'meets', 'https://t.co/ivAdgBbTD5', '(Mr', 'Graham', 'watched', 'https://t.co/O9th7sCET6', 'character', 'staring', 'Diaries', 'tweet', 'of…', 'going', 'Cine--)', 'hot', 'On', 'JOHANSSON', 'Dignity', 'Shrinks', 'better', 'Phoenix', 'Damon,', 'fix', 'Hommes,', '#gils', 'threaten', 'Eastwood.', 'Intimidated', 'https://t.co/BWEVSu2ZqW', 'DiCaprio', '(Scott', 'Keenen,', 'movie', '@janelyelayne', 'and/or', 'Wayans."', 'best', "'Overdrive'", 'https://t.co/5UnnNnroZs', 'lohan', 'movies', 'acero', 'bin', '@losmizzle:', 'é', 'Blu-ray', 'Revolutionary', '#DVD', 'by', 'Damon.', 'say', 'the', 'https://t.co/9eRaF5isLu', 'did', 'Lohan', 'Oscar-winning', 'retweet???', 'DiCaprio,', '#lindsay', 'Affleck', '(2016)', '2016:', 'Movie', 'gem', 'made', '#KingArthur', 'allot', '@LeChatPatriote', '13-year-old', 'Partially', 'DiCaprio:', '#filthy', 'Eastwood', 'over', 'JASON', 'c…', 'and', 'in', 'people', 'princess', 'Yo', '@E_Batke12:', 'meant', "don't", 'los', 'person', 'Eastwood?', 'Epic', '@drugproblem:', 'Gibson,', 'bummed', 'BOURNE', "didn't", 'you', '@appleheadgerson:', 'de', 'Ana', 'momma', 'warrior', '(1995)', 'back', 'make', 'https://t.co/UlXG0BYoWr', 'fans!!…', 'mag.', 'episode', 'Quant', 'June', 'hot😍😭', 'Clip', 'https://t.co/WKYoxhIZqh', 'puta', 'Oscars', 'cuando', 'sale', 'yall', 'comedy-drama', 'yesterday?', 'https://t.co/UV25QUwHGS', 'Coachella', 'https://t.co/DZDD4twBfx', 'posters:', 'stars', 'a', 'realidad', 'pussy', '-', 'insulting', 'https://t.co/VIPbnMhCXT', 'get', '#KateWinslet', 'today.', 'black', 'compliment.', 'Playboy', 'forever', 'https://t.co/f…', '#WalkofFameMovie', 'ROLE', 'how', 'McConaughey…', 'From', 'crowd,', 'The', 'Wolf', 'WOODY', 'https://t.co/ZgBnHKn…', 'can', ',HUGH', 'After', 'Tickets', 'Interview', 'Tyler', 'would', 'Scary', '#guyswithbulge', 'Bill', 'not', 'improve', 'wrestling', 'People', 'my', 'Active', "I'm", 'Wall', '@BowersLyndsey:', 'learning', 'Margot', 'e…', 'Murray,', '@FeministaJones:', '"Good', 'Nashville', 'asf', 'them,', 'Goes', 'with', 'Matt.', 'welcome.', 'recent', 'no…', 'Charlie', 'Eastwood,', '#amateur', 'take', 'damon', 'highlights', 'u', 'Mesnick', 'last', 'online', '#WoodyAllen', 'y', 'https://t.co/s18me6j9GW', 'help', 'it', '2-4', 'Wayans', 'https://t.co/r8tQjEmvsa', 'Fight', '@Napolelyon', 'earth', 'https://t.co/vv2h1vU8pI', '4/20', 'star', 'EVERYTHINGGGG!!!!', 'Stand-Up', 'https://t.co/1gZegLJ8j…', 'Son', 'thank', 'https://t.co/s9ojzUnmS1', 'Pranks', 'JACKMAN', 'https://t.co/fpkmi2tl5q', 'Stint', 'motorcycle', "'SNL'", 'even', '@MoreReginaHall', 'out', '😍', 'Zoe', 'Road', 'Hell', 'featuring', '23.05', 'puedo', 'Scorsese', 'peta', 'Includes', '@MarlonWayans', 'Omaze', "y'all", '@TheChainsmokers!', '#SNL', '@OnlyFilmMedia:', 'https://t.co/AK1RKHoyGG', 'age', '@kevschwa:', 'Ben', 'New', 'tráiler', 'no', 'sorry', 'Rose).', 'All', 'à', 'lesbian', 'here', '@SayWhatSugar', 'Robbie,', '#bulge', 'deleted', '#food', 'Jajajaja', 'film', '@Duncanstein', 'yeah!', 'Me', '(Charlie', 'George', 'C.K.', 'Matt', 'magazine.', 'Swan', 'we', 'C.K', '🌟🌹❤️', 'is', 'naked', 'be', 'mess,', 'https://t.co/qyv1y8hWbh', 'un', 'Thrones', 'still', 'https://t.co/l0TrDXXveo', 'casa', 'Ludacris,', 'aracılığıyla', 'tells', 'hurt', 'japanbabe', 'pics', 'lindsay', 'funny', 'Before', 'https://t.co/DOLehBZgTe', 'will', '(James', 'Becoming', '@backpackthefilm', 'Minimum)', 'Fassbender', 'https://t.co/orC01XuEhU', 'https://t.co/SRKdQOxE10', '@shawn_wayans', 'mean', 'Host', 'Brand', '|', 'Watch', 'subtitles', '#hugh', 'gigantes', 'Hello', 'Dad', 'r…', 'opointment', 'should', '@xnaraarts:', 'SFIO', ',', 'about', 'Stand', '@AestheticClips:', 'Because', '#Overdrive', 'SNL', '@kostabella', '#sex', "C.K.'s", 'Isto', 'https://t.co/zuoIjvTnqG', 'live', 'https://t.co/7tNigOVuY5', 'Did', 'says', 'https://t.co/14zXd0tyws', "We're", 'to', 'Being', 'lol.i', 'tão', 'https://t.co/1N3Xn5hsJ2', 'Descriptiv…', 'got', 'https://t.co/OXSuLgIWyU', 'are', 'week', 'Peace', 'profesional', 'https://t.co/q8TbScj2JA', 'all', 'screens', 'NEW', '@izzy_mj:', 'docters', 'Bourne“', 'Armas', 'Reisner', 'trying', 'photo', 'eastwood', 'Furious', 'Leonardo', '#Buzz:', '#diet', 'Flood', 'played', 'if', 'having', 'phase,', 'siblings', 'you??', 'monroe', '@raimovie:', '//', 'madre', 'verrät', 'someone,', 'main', '20', 'than', 'https://t.co/ASS89tTofg', 'makes', "That's", 'Jackman', 'question?', '@YouTube', 'cracked-out', 'mine', 'show', 'https://t.co/OibrQkUAmz', 'más', 'Bonus', 'https://t.co/eXB18FTFJ9', 'instead', "They're", 'https://t.co/7H84PghCxO', '"Riviera', 'Trailer', 'Surprise', 'Louis', 'Im', 'Daman,', 'am', 'https://t.co/BdPl6Mwy5E', '@SamJ_G_K', 'night,', 'go', 'Hill,', 'good', 'really', "Clooney's", 'but', '#Wayans', '@benthenastygoat:', 'producer', 'Martin', 'SEALED', 'Ever', 'Would', 'this', 'Live', 'Stevens', 'hate.', '@Water', 'Clooney', 'become', '"The', 'Matthew', 'pictures', 'Rim', 'en', '-Louis', 'ended', '2012', 'arrange', 'editors', 'family!', 'Youtube', '@pinejackman:', 'ALLEN', '@Film4:', 'road', 'It', 'DVD', '#Score', '😍😍', '@WorldBankWater:', '#Leonardo', 'more', 'Cossack', 'Hardy', '#DiCaprio', 'seine', '@Louis_2_Bourbon', 'Water,', 'video', 'hugh', 'HD', 'Hunnam),', 'need', 'for', '#tomhardy', 'Get', 'picture', 'Jonah', 'Up', '21+', 'whole', 'now:', 'inside', 'porn', 'funny...I', 'vídeo', 'down', 'schleep', '@AudreyPatriote', 'https://t.co/MwLaVtAp6w', 'where', 'day', 'time', 'event', 'that…', 'https://t.co/O3CmRmRd1L', '#Bulges', 'Scott', 'Street"', 'action', 'marilyn', 'https://t.co/6w0LW5dnIu', 'me', 'from', 'sarcastic', 'filming', 'OPEN', 'Oscars.', '2', 'Acham', 'jailbird', 'thought', 'photoshop.', 'Alle', 'too!!', 'sooooo', '@AnnaKFaris', '#Shawn', 'family', 'OVERDRIVE', 'Comedian', 'attempt', "8'", 'raunchy', '(https://t.co/jz7HvCW6Ia', '#RideOrDieFamily', '(18+', 'https://t.co/s…', 'narrated', 'that', 'blockbuster', 'Jason', 'watch', 'of', 'L’Officiel', 'Emmanuel.', 'https://t.co/LKhSE8uY4e', 'https://t.co/nzY3ifAmJB', '@deathbysexy', 'Sydney', 'smoking', "'Revenant'", '#Water4All', 'https://t.co/lPpn6WnNog', '@RTorFavMusicnTV:', 'Tom', 'al', 'pic.❤️', 'Little', '#Entertainment', 'her', 'Norton', 'https://t.co/WXRY54r2ab', 'Jackman...', 'https://t.co/MTJXP6dMIv', 'RT', 'just', '@sasha_velour:', 'https://t.co/8gPFcW8VaS', 'nothing', 'out!', 'bear', 'nakedsexy', "'Fast", 'Hugh', 'https://t.co/dNo9TA9kyI', 'Will', 'https://t.co/qVmpQKtCGp', 'https://t.co/vIx3FMpJ15', 'was', 'i', '&amp;', '(--Adictos', '"There\'s', 'Basketball', '😍💜', 'free', 'Movie).', 'Monum…', 'grumpy', 'she', 'nudist', '(https://t.co/ahmYpfxw7K', 'females', 'Lindsay', 'Netflix', 'Goodman,', 'brother', 'WWII', 'decide', "You're", 'LIKE', 'https://t.co/2QSHvmdcCn', '@VincLapierre', '2017', 'después', 'https://t.co/GuHdWqqYrv', "'Magic'", '2:', 'girls', 'matt', 'https://t.co/rECbvnPz4C', 'rather', 'Mission', 'tweet...', 'guess', "'Titanic'", 'Furious.', 'Dan', 'an…', 'Michael', 'May', 'Spy', 'sees', 'Hacen', 'replay', 'Pacific', 'Damon', 'public', 'filmed', '\U0001f923Check', '#Beauty:', 'Saturday', 'up', 'Featurette', 'on', 'think', '+', 'bro', 'so', '#Fashion', 'https://t.co/YwuPQZTVYF', 'Stunt-Geheimnisse', 'he', 'jackman', 'chicks', 'https://t.co/PvRKA1vqgB', '#Director', 'Stunt"', 'fucking', '@nbcsnl:', 'Missed', '(2017)', 'at', 'or', 'Marlon:', 'Nathalie', "they'd", 'Shawn,', 'didn\'t."', '@POOP35965395', 'Sometimes', 'https://t.co/maKZ7NSZXt', 'Bonuses…', 'Week', 'special.', 'wrote', 'they', 'Tyrese', '@nashfilmfest:', 'high', '@McneilAbdur', '@SKlosBTWFDP', 'So', 'alone,', 'https://t.co/9qnWmJnj23', '#watch', 'hermosos,', 'compliment', 'patriots'}
+---------------------------------------------------------
+The Most Common Character in all of the Tweets is:
+
+The Character: 't' with 440 occurances
+
+---------------------------------------------------------
+It's also important to look for the most popular movie based on Rotten Tomatoes Ratings!
+
+The Top Rated Movie out of the list of movies above is: Good Will Hunting with a rating of 97/100! 
+
+---------------------------------------------------------
+Also looking at the plot of ALL the movies in the list above, we looked for the two most common words in the plot: 
+
+Those two words are: 
+'the' with 47 occurances
+
+and
+
+'to' with 29 occurances
+
+---------------------------------------------------------
+Thanks for running my program! Have an aMAIZEing day!
