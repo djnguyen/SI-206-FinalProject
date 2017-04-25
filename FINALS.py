@@ -341,7 +341,7 @@ class TwitterUser(object):
         self.description = TWITTER_DICT['description']
 
 
-list_of_movies = ["Mean Girls", "White Chicks", "The Secret Life of Pets", "The Fate of the Furious", "Logan", "Good Will Hunting"]
+list_of_movies = ["Mean Girls", "White Chicks", "The Secret Life of Pets", "The Fate of the Furious", "Logan", "Good Will Hunting", "Inception"]
 
 
 movie_tuple = []
@@ -467,7 +467,7 @@ cur.execute(create_tweets_table) #creating the tweets table
 db_conn.commit()
 
 
-add_movie_statement = 'INSERT INTO Movies VALUES (?,?,?,?,?,?,?,?,?)'
+add_movie_statement = 'INSERT OR IGNORE INTO Movies VALUES (?,?,?,?,?,?,?,?,?)'
 
 for x in movie_tuple:
     cur.execute(add_movie_statement, x)
@@ -476,7 +476,7 @@ db_conn.commit()
 
 # creating statements to upload to the tweets table
 
-add_tweet_statement = 'INSERT INTO Tweets VALUES (?,?,?,?,?,?,?,?)'
+add_tweet_statement = 'INSERT OR IGNORE INTO Tweets VALUES (?,?,?,?,?,?,?,?)'
 
 for x in tweet_tuple:
     for y in x:
@@ -484,7 +484,7 @@ for x in tweet_tuple:
 
 db_conn.commit()
 
-add_user_statement = 'INSERT INTO Users VALUES (?,?,?,?,?)'
+add_user_statement = 'INSERT OR IGNORE INTO Users VALUES (?,?,?,?,?)'
 
 for x in final_user_database:
     cur.execute(add_user_statement,x)
@@ -493,8 +493,69 @@ db_conn.commit()
 
 
 
+## Task 3: Database Queries + Data Manupulation
+
+query_1 = 'SELECT Movies.top_actor, Users.screen_name FROM Tweets INNER JOIN Users ON Tweets.user_id = Users.user_id INNER JOIN Movies ON Tweets.movie_id = Movies.movie_id WHERE Users.followers > 1000'
+
+cur.execute(query_1)
+users_info = cur.fetchall()
+
+user_dictionary = {user[0]: user[1] for user in users_info}
+
+#print (user_dictionary)
 
 
+query_2 = 'SELECT text FROM Tweets'
+cur.execute(query_2)
+tweet_text = [thing[0] for thing in cur.fetchall()]
+
+#print(tweet_text)
+
+tweet_words = {word for some_string in tweet_text for word in some_string.split()}
+
+print ("Tweet Words is: ")
+print (tweet_words)
+print ('-----------------------')
+
+characters_list = [] #all of the characters 
+
+for description in tweet_words:
+    characters = re.findall(r"[a-zA-Z0-9]", description) #using regX to search for the words
+    for character in characters:
+        characters_list.append(character)
+
+most_common_char = collections.Counter(characters_list).most_common(1)[0] #using Counter in the Collections Library
+
+print ("The Most Common Character is in all the Tweets are : ")
+print (most_common_char)
+print ('-----------------------')
+
+query_3 = 'SELECT title, plot, rotten_tomato_rating FROM Movies'
+cur.execute(query_3)
+movie_list = cur.fetchall()
+#print (movie_list)
+
+sorted_ratings = sorted(movie_list, key=lambda x: x[2], reverse = True)
+
+top_movie_w_rating = movie_list[0][0]
+
+
+all_plots = []
+final_plots = []
+
+for x in movie_list:
+    all_plots.append(x[1])
+
+#print (all_plots)
+
+for x in all_plots:
+    for y in x.split():
+        final_plots.append(y)
+
+print ("The Most Common Word in the Plot is: ")
+common_plot_word = collections.Counter(final_plots)
+print (common_plot_word.most_common()[0])
+print (common_plot_word.most_common()[1])
 
 
 
