@@ -15,6 +15,7 @@
 ######### END INSTRUCTIONS #########
 
 # Put all import statements you need here.
+
 import unittest
 import requests
 import json
@@ -23,6 +24,7 @@ import twitter_info
 import sqlite3
 import collections
 import itertools
+
 # Begin filling in instructions....
 
 ## INSTRUCTIONS
@@ -57,7 +59,7 @@ api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 ##### END TWEEPY SETUP CODE
 
 ### DEALING WITH CACHED FILES #################
-CACHE_FNAME = "206_final_project_cache_data_access.json"
+CACHE_FNAME = "FINAL.json"
 
 
 try:
@@ -69,102 +71,9 @@ try:
 except:
     CACHE_DICTION = {}
 
-### OMDB API WITH CACHING ###
+# MOVIE SELECTION
 
-#This function caches data from the OMDB Database
-
-def get_OMDB_WithCaching(baseURL, params={}):
-  
-  req = requests.Request(method = 'GET', url =baseURL, params = params )
-  prepped = req.prepare()
-  full_URL = prepped.url
-  
-
-  if full_URL not in CACHE_DICTION:
-      
-      response = requests.Session().send(prepped)
-      CACHE_DICTION[full_URL] = response.text
-
-      
-      cache_file = open(CACHE_FNAME, 'w')
-      cache_file.write(json.dumps(CACHE_DICTION, indent = 2))
-      cache_file.close()
-
-
-  return CACHE_DICTION[full_URL]
-
-
-### GET OMDB DATA ###
-
-def get_OMDB_data(movie_title):
-
-
-    base_url = "http://www.omdbapi.com/?"
-    params_dict = {'t': movie_title,
-    'plot': 'full'}
-    # params_dict['t'] = movie_title
-    # params_dict['plot'] = 'full'
-
-    resp_text = get_OMDB_WithCaching(base_url, params_dict)
-
-    processed_data = json.loads(resp_text)
-
-    if 'Error' in processed_data.keys():
-        return "{} is not a movie found on OMDB's API!".format(movie_title)
-
-    return processed_data
-
-
-### TWITTER API SEARCHING ###
-
-def get_twitter_handle(twitter_search_query):
-    
-    if twitter_search_query in CACHE_DICTION:
-        tweet_results = CACHE_DICTION[twitter_search_query]
-
-        twitter_handle = '@' + tweet_results[0]['screen_name']
-        
-        return twitter_handle
-
-    else:
-        params_dict = {}
-        params_dict['per_page'] = 1
-        params_dict['page'] = 1
-        tweet_results = api.search_users(twitter_search_query, params = params_dict)
-        CACHE_DICTION[twitter_search_query] = tweet_results
-
-        dumping_results = open(CACHE_FNAME,'w')
-        dumping_results.write(json.dumps(CACHE_DICTION, indent=2))
-        dumping_results.close()
-
-        twitter_handle = '@' + tweet_results[0]['screen_name'] ## can we check if it is verified?
-
-        return twitter_handle
-
-def searching_twitter(twitter_search_term):
-
-    some_identifier = "twitter_{}".format(twitter_search_term)
-
-    if some_identifier in CACHE_DICTION:
-        tweet_results = CACHE_DICTION[some_identifier]
-
-        return tweet_results
-
-    else:
-        try:
-            tweet_results = api.search(q=twitter_search_term)
-
-            CACHE_DICTION[some_identifier] = tweet_results
-
-            dumping_results = open(CACHE_FNAME,'w')
-            dumping_results.write(json.dumps(CACHE_DICTION, indent =2))
-            dumping_results.close()
-        except:
-            print ("ERROR")
-            exit()
-
-        return tweet_results
-
+list_of_movies = ["Mean Girls", "Get Out", "The Secret Life of Pets"]
 
 ### DEFINING MOVIE CLASS ###
 
@@ -276,6 +185,127 @@ class Tweet(object):
         self.favorites = [x['favorite_count'] for x in TWITTER_DICT['statuses']]
         self.retweets = [x['retweet_count'] for x in TWITTER_DICT['statuses']]
         self.text = [x['text'] for x in TWITTER_DICT['statuses']]
+
+### OMDB API WITH CACHING ###
+
+#This function caches data from the OMDB Database
+
+def get_OMDB_WithCaching(baseURL, params={}):
+  
+  req = requests.Request(method = 'GET', url =baseURL, params = params )
+  prepped = req.prepare()
+  full_URL = prepped.url
+  
+
+  if full_URL not in CACHE_DICTION:
+      
+      response = requests.Session().send(prepped)
+      CACHE_DICTION[full_URL] = response.text
+
+      
+      cache_file = open(CACHE_FNAME, 'w')
+      cache_file.write(json.dumps(CACHE_DICTION, indent = 2))
+      cache_file.close()
+
+
+  return CACHE_DICTION[full_URL]
+
+
+### GET OMDB DATA ###
+
+def get_OMDB_data(movie_title):
+
+
+    base_url = "http://www.omdbapi.com/?"
+    params_dict = {'t': movie_title,
+    'plot': 'full'}
+
+    resp_text = get_OMDB_WithCaching(base_url, params_dict)
+
+    processed_data = json.loads(resp_text)
+
+    if 'Error' in processed_data.keys():
+        return "{} is not a movie found on OMDB's API!".format(movie_title)
+
+    return processed_data
+
+
+### TWITTER API SEARCHING ###
+
+def get_twitter_handle(twitter_search_query):
+    
+    if twitter_search_query in CACHE_DICTION:
+        tweet_results = CACHE_DICTION[twitter_search_query]
+
+        twitter_handle = '@' + tweet_results[0]['screen_name']
+        
+        return twitter_handle
+
+    else:
+        params_dict = {}
+        params_dict['per_page'] = 1
+        params_dict['page'] = 1
+        tweet_results = api.search_users(twitter_search_query, params = params_dict)
+        CACHE_DICTION[twitter_search_query] = tweet_results
+
+        dumping_results = open(CACHE_FNAME,'w')
+        dumping_results.write(json.dumps(CACHE_DICTION, indent=2))
+        dumping_results.close()
+
+        twitter_handle = '@' + tweet_results[0]['screen_name'] ## can we check if it is verified?
+
+        return twitter_handle
+
+def searching_twitter(twitter_search_term):
+
+    some_identifier = "twitter_{}".format(twitter_search_term)
+
+    if some_identifier in CACHE_DICTION:
+        tweet_results = CACHE_DICTION[some_identifier]
+
+        return tweet_results
+
+    else:
+        try:
+            tweet_results = api.search(q=twitter_search_term)
+
+            CACHE_DICTION[some_identifier] = tweet_results
+
+            dumping_results = open(CACHE_FNAME,'w')
+            dumping_results.write(json.dumps(CACHE_DICTION, indent =2))
+            dumping_results.close()
+        except:
+            print ("ERROR")
+            exit()
+
+        return tweet_results
+
+def twitter_user_info(twitter_handle):
+
+    some_identifier = 'twitter_user_{}'.format(twitter_handle)
+
+    if some_identifier in CACHE_DICTION:
+        user_info = CACHE_DICTION[some_identifier]
+
+        return user_info
+
+    else:
+        try: 
+            user_info = api.get_user(screen_name = twitter_handle)
+
+            CACHE_DICTION[some_identifier] = user_info
+
+            dumping_results = open(CACHE_FNAME, 'w')
+            dumping_results.write(json.dumps(CACHE_DICTION, indent = 2))
+            dumping_results.close()
+
+        except:
+            print ("ERROR")
+            exit()
+
+        return user_info
+
+
 
 
 ### PUTTING IT ALL TOGETHER (ISH)
@@ -420,7 +450,7 @@ class Testing_Movie_Class(unittest.TestCase):
 class Misc_Tests(unittest.TestCase):
 
     def test_caching(self):
-        file = open("206_final_project_cache_data_access.json", 'r')
+        file = open("FINAL.json", 'r')
         file_contents = file.read()
         file.close()
 
