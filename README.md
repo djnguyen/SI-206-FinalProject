@@ -2,34 +2,70 @@
 
 This is my final project for SI 206 at the University of Michigan School of Information
 
-## Option #2 
+## Option #2: API Mashup: Twitter & OMDB
+
+This program searches through a list of movies and pulls data from the OMDB API. Also, the top actor is searched on Twitter through the Tweepy API and all of the data is stored into a database. There is some data manipulation also involved with this program and all of the results are outputted into a .txt file.
+
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Ensure that a twitter_info.py file is contained within the same directory and run the file 206_final_project.py
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+What things you need to run the program and how to install them
 
 ```
-Give examples
+Modules to install include: requests, tweepy, sqlite3
+
+Also, it is important to have a twitter_info.py file contining confidential information for a Twitter account
 ```
 
-### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
+### Files Included
 ```
-Give the example
+- 206_final_project.py (Contains the Python Program)
+- 206_final_project_cached.json (Contains cached data to run program offline)
+- 206_final_project_database.db (Contains the Databases)
 ```
 
-And repeat
+
+### Functions
+
+These are the following functions that are contained in 206_final_project.py
 
 ```
-until finished
+def get_OMDB_WithCaching():
+
+Input: baseURL and Parameters
+Behavior: Checks if the search query is in the cached file or makes a request to the OMDB API and then stores it within the cached file
+Returns: JSON Object from OMDB API
 ```
+
+```
+def get_OMDB_data()
+Input: movie_title (represents a movie as a string)
+Behavior: Creates the URL for the API calling and calls get_OMDB_WithCaching function
+Returns: JSON Object from OMDB API
+```
+```
+def get_twitter_handle
+Input: search query
+Behavior: Makes a call to the Tweepy API and caches it. Obtains the twitter handle from the search query
+Returns: Twitter Handle
+```
+```
+def searching_twitter()
+Input: search query
+Behavior: Makes a call to the Tweepy API and caches it. Obtains the Twitter Search results in a JSON Format
+Returns: JSON Object from Tweepy API
+```
+```
+def searching_twitter()
+Input: twitter_handle
+Behavior: Makes a call to the Tweepy API and caches it. Obtains the Twitter User Information results in a JSON Format
+Returns: JSON Object from Tweepy API
+```
+
 
 End with an example of getting some data out of the system or using it for a little demo
 
