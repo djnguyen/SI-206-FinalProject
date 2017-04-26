@@ -429,6 +429,8 @@ cur.execute(create_tweets_table)
 
 db_conn.commit()
 
+# creating statements to upload to the movies table
+
 
 add_movie_statement = 'INSERT OR IGNORE INTO Movies VALUES (?,?,?,?,?,?,?,?,?)'
 
@@ -446,6 +448,8 @@ for x in tweet_tuple:
         cur.execute(add_tweet_statement,y)
 
 db_conn.commit()
+
+# creating statements to upload to the users table
 
 add_user_statement = 'INSERT OR IGNORE INTO Users VALUES (?,?,?,?,?)'
 
@@ -476,11 +480,8 @@ tweet_text = [thing[0] for thing in cur.fetchall()]
 
 tweet_words = {word for some_string in tweet_text for word in some_string.split()}
 
-print ("Tweet Words is: ")
-print (tweet_words)
-print ('-----------------------')
 
-characters_list = [] #all of the characters 
+characters_list = [] # all of the characters 
 
 for description in tweet_words:
     characters = re.findall(r"[a-zA-Z0-9]", description) #using regX to search for the words
@@ -489,20 +490,15 @@ for description in tweet_words:
 
 most_common_char = collections.Counter(characters_list).most_common(1)[0] #using Counter in the Collections Library
 
-print ("The Most Common Character is in all the Tweets are : ")
-print (most_common_char)
-print ('-----------------------')
 
 query_3 = 'SELECT title, plot, rotten_tomato_rating FROM Movies'
 cur.execute(query_3)
 movie_list = cur.fetchall()
-#print (movie_list)
 
 sorted_ratings = sorted(movie_list, key=lambda x: x[2], reverse = True)
 
 top_movie_w_rating = sorted_ratings[0]
 
-print (top_movie_w_rating)
 
 
 all_plots = []
@@ -511,23 +507,20 @@ final_plots = []
 for x in movie_list:
     all_plots.append(x[1])
 
-#print (all_plots)
 
 for x in all_plots:
     for y in x.split():
         final_plots.append(y)
 
-# print ("The Most Common Word in the Plot is: ")
 common_plot_word = collections.Counter(final_plots)
-# print (common_plot_word.most_common()[0])
-# print (common_plot_word.most_common()[1])
+
 
 
 #Task 4: Text File Summary
 
 
 # #CREATING A TXT FILE
-outfile = open('finalproject.txt', 'w')
+outfile = open('206_final_project.txt', 'w')
 outfile.write("David's Summary Statistics for Movies & Twitter as of April 25, 2017 \n \n \n \n")
 
 outfile.write("The Movies that I obtained data on are: \n")
@@ -584,10 +577,8 @@ outfile.close()
 db_conn.close()
 
 
-# Put your tests here, with any edits you now need from when you turned them in with your project plan.
 
 ### TEST SUITE ###
-# i added one database test code here. I promise to add more later!!!
 
 class Testing_OMDB_API(unittest.TestCase):
 

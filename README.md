@@ -26,6 +26,7 @@ Also, it is important to have a twitter_info.py file contining confidential info
 - 206_final_project.py (Contains the Python Program)
 - 206_final_project_cached.json (Contains cached data to run program offline)
 - 206_final_project_database.db (Contains the Databases)
+- 206_final_project.txt (Text File)
 ```
 
 
@@ -181,12 +182,23 @@ I have had the great pleasure of working with various APIs throughout my time co
 
 ## SI 206 Specific Needs
 
+Below are the Specific Lines where certain elements are to begin:
+
+* List of Movies: 307
+* Data Gathering Functions: 29 - 161 + 318 - 356
+* Class Definitions: 166 - 304
+* Creation of Database: 405 - 430
+* Uploading of Database: 435 - 459 
+* Data Processing: 463 - 515
+* Creating Output File: 519 - 575
+* Testing Code: 583 - 670
 
 
 ## Built With
 
 * Sublime Text
 * Python 3 
+* Many Hours of Hard Work 
 
 ## Authors
 
