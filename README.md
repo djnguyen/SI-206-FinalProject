@@ -178,32 +178,25 @@ All of the movies have a plot and all of the plots are parsed and the top two co
 ## Why This Project?
 
 I have had the great pleasure of working with various APIs throughout my time coding here as a UMSI student and I am really interested in how to manupulate data to do something really cool. As this will be my final coding class as a BSI student, I am glad to have made a final product!
+
+## SI 206 Specific Needs
+
+
+
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
+* Sublime Text
+* Python 3
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+* **David Nguyen** - *Author* - [GitHub](https://github.com/djnguyen)
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+* Thank you to Jackie Cohen and her amazing teaching skills and dedication to her students
+* Shoutout to the SI 206 Winter 2017 GSI for being so welcoming
+* Thank You to the School of Information for creating such a great undergraduate program!
+* The Mason Hall Computing Center for being open 24/7 for my late night coding needs
