@@ -60,13 +60,7 @@ Behavior: Makes a call to the Tweepy API and caches it. Obtains the Twitter Sear
 Returns: JSON Object from Tweepy API
 ```
 ```
-def searching_twitter()
-Input: twitter_handle
-Behavior: Makes a call to the Tweepy API and caches it. Obtains the Twitter User Information results in a JSON Format
-Returns: JSON Object from Tweepy API
-```
-```
-def searching_twitter()
+def twitter_user_info()
 Input: twitter_handle
 Behavior: Makes a call to the Tweepy API and caches it. Obtains the Twitter User Information results in a JSON Format
 Returns: JSON Object from Tweepy API
@@ -75,6 +69,12 @@ Returns: JSON Object from Tweepy API
 def uploading_databases()
 Input: none
 Behavior: using all of the information made from the classes, this function iterates through all of the moves in 'list_of_movies' and creates instances of them. Those instances are created into tuples which are then appended to a list to be used for database uploading later in the program.
+Returns: none
+```
+```
+def unique_handle()
+Input: a list
+Behavior: checks of the handle is within another list to prevent issues when uploading as a PRIMARY KEY to the database
 Returns: none
 ```
 
