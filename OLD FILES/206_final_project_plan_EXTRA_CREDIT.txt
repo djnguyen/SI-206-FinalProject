@@ -1,0 +1,59 @@
+Name: David Nguyen
+Uniqname: djnguyen
+Discussion: 3-4 PM Thursday
+
+SI 206 Final Project Plan: Winter 2017
+Option #2: Twitter and OMDB
+
+Potential Functions to Create:
+
+** def cacheData()
+
+INPUT: none
+ 
+PURPOSE: CACHING DATA
+
+RETURNS: nothing
+
+** def getTwitterData(twitter_user) **
+
+INPUT: Twitter Handle
+
+PURPOSE: Makes call to Tweepy API for Tweets published by the Twitter User based on the handle
+
+RETURNS: JSON Object to be used later for extracting data
+
+** def getOMDBdata(search_term) **
+
+INPUT: Search Term (movies/actors/etc)
+
+PURPOSE: Makes call to the OMDB API based on the search parameters. Still needs to read up on API Documentation. 
+
+API Documentation: http://www.omdbapi.com/
+
+RETURNS: JSON Object to be used later for extracting data
+
+** class Movie(self, OMDB_object = {}) **
+
+This will be a class for all the attributes based on the movie.
+
+INPUT: the JSON object that is extracted from the getOMDB data
+
+RETURNS: String Method of maybe the Movie, Year, and Actor
+
+CONSTRUCTOR: defines all of the self.X variables to be used for futher methods in the class Movie. 
+
+We will use the JSON file object that is inputted to extract the title, director, IMDB rating, listing of actors, number of languages, and their Rotten Tomatoes rating.
+
+
+Methods can Include returning each of the elements. One of the methods can create a tuple that will be used to put into a database in later code. More methods will be TBD.
+
+
+** class Tweet(self, Twitter_object = {}) **
+
+This will be a class for a simple Tweet.
+Will be very similar to the Movie class
+
+
+
+More Functions and things will be done TBD
