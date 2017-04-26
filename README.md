@@ -186,9 +186,7 @@ I have had the great pleasure of working with various APIs throughout my time co
 ## Built With
 
 * Sublime Text
-* Python 3
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* Python 3 
 
 ## Authors
 
